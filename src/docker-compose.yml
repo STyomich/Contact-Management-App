@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  contact.management.presentation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - contact.management.mssql
+    environment:
+      MSSQL_HOST: mssql
+      MSSQL_PORT: 1433
+      MSSQL_DATABASE: ContactManagement
+      MSSQL_USER: sa
+      MSSQL_PASSWORD: YourStrong!Passw0rd
+
+  contact.management.mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: contact_management_mssql
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong!Passw0rd"
+    ports:
+      - "1433:1433"
+    volumes:
+      - contact.management.mssql_data:/var/opt/mssql
+
+volumes:
+  contact.management.mssql_data:

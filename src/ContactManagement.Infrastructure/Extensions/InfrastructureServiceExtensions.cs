@@ -15,11 +15,12 @@ public static class InfrastructureServiceExtensions
     {
         string connectionStringTemplate = configuration.GetConnectionString("SqlServerConnection")!;
         string connectionString = connectionStringTemplate
-          .Replace("$SQLSERVER_HOST", Environment.GetEnvironmentVariable("SQLSERVER_HOST"))
-          .Replace("$SQLSERVER_PASSWORD", Environment.GetEnvironmentVariable("SQLSERVER_PASSWORD"))
-          .Replace("$SQLSERVER_DATABASE", Environment.GetEnvironmentVariable("SQLSERVER_DATABASE"))
-          .Replace("$SQLSERVER_PORT", Environment.GetEnvironmentVariable("SQLSERVER_PORT"))
-          .Replace("$SQLSERVER_USER", Environment.GetEnvironmentVariable("SQLSERVER_USER"));
+            .Replace("$MSSQL_HOST", Environment.GetEnvironmentVariable("MSSQL_HOST"))
+            .Replace("$MSSQL_PORT", Environment.GetEnvironmentVariable("MSSQL_PORT"))
+            .Replace("$MSSQL_DATABASE", Environment.GetEnvironmentVariable("MSSQL_DATABASE"))
+            .Replace("$MSSQL_USER", Environment.GetEnvironmentVariable("MSSQL_USER"))
+            .Replace("$MSSQL_PASSWORD", Environment.GetEnvironmentVariable("MSSQL_PASSWORD"));
+
 
         services.AddDbContext<ContactManagementDbContext>(opt =>
             {

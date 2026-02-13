@@ -46,11 +46,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Environment variables (MS SQL)
-ENV POSTGRES_HOST=localhost
-ENV POSTGRES_PASSWORD=admin
-ENV POSTGRES_DATABASE=UsersService
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PORT=5432
-
 ENTRYPOINT ["dotnet", "ContactManagement.Presentation.dll"]

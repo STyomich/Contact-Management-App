@@ -2,7 +2,53 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model IEnumerable<ContactManagement.Application.DTO.Contacts.ContactListItemDto>
+
+<h2>Upload CSV</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div style="color:red">@TempData["Error"]</div>
+}
+
+<form asp-action="Upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
+
+<hr />
+
+<h2>Persons</h2>
+
+<input type="text" id="searchInput" placeholder="Search..." />
+
+<table id="contactTable" border="1">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">Name</th>
+            <th onclick="sortTable(1)">DOB</th>
+            <th onclick="sortTable(2)">Married</th>
+            <th onclick="sortTable(3)">Phone</th>
+            <th onclick="sortTable(4)">Salary</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr data-id="@person.Id">
+                <td contenteditable="true">@person.Name</td>
+                <td contenteditable="true">@person.DateOfBirth.ToShortDateString()</td>
+                <td contenteditable="true">@person.Married</td>
+                <td contenteditable="true">@person.Phone</td>
+                <td contenteditable="true">@person.Salary</td>
+                <td>
+                    <button onclick="saveRow(this)">Save</button>
+                    <button onclick="deleteRow(this)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/js/contact.js"></script>
